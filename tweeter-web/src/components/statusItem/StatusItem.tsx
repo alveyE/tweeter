@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { Status } from "tweeter-shared";
 import Post from "./Post";
 
-interface StatusItemProps {
+interface Props {
   status: Status;
+  navigateToUser: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
-const StatusItem: React.FC<StatusItemProps> = ({ status }) => {
+const StatusItem: React.FC<Props> = (props: Props) => {
   return (
     <div className="row mb-3 mx-0 px-0 border rounded bg-white">
       <div className="col bg-light mx-0 px-0">
@@ -15,7 +16,7 @@ const StatusItem: React.FC<StatusItemProps> = ({ status }) => {
           <div className="row mx-0 px-0">
             <div className="col-auto p-3">
               <img
-                src={status.user.imageUrl}
+                src={props.status.user.imageUrl}
                 className="img-fluid"
                 width="80"
                 alt="Posting user"
@@ -24,19 +25,19 @@ const StatusItem: React.FC<StatusItemProps> = ({ status }) => {
             <div className="col">
               <h2>
                 <b>
-                  {status.user.firstName} {status.user.lastName}
+                  {props.status.user.firstName} {props.status.user.lastName}
                 </b>{" "}
                 -{" "}
                 <Link
-                  to={status.user.alias}
-                  onClick={(event) => navigateToUser(event)}
+                  to={props.status.user.alias}
+                  onClick={(event) => props.navigateToUser(event)}
                 >
-                  {status.user.alias}
+                  {props.status.user.alias}
                 </Link>
               </h2>
-              {status.formattedDate}
+              {props.status.formattedDate}
               <br />
-              <Post status={status} />
+              <Post status={props.status} />
             </div>
           </div>
         </div>
