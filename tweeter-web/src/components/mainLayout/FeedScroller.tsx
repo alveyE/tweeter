@@ -80,39 +80,6 @@ const FeedScroller = () => {
     return FakeData.instance.getPageOfStatuses(lastItem, pageSize);
   };
 
-  const navigateToUser = async (event: React.MouseEvent): Promise<void> => {
-    event.preventDefault();
-
-    try {
-      const alias = extractAlias(event.target.toString());
-
-      const user = await getUser(authToken!, alias);
-
-      if (!!user) {
-        if (currentUser!.equals(user)) {
-          setDisplayedUser(currentUser!);
-        } else {
-          setDisplayedUser(user);
-        }
-      }
-    } catch (error) {
-      displayErrorMessage(`Failed to get user because of exception: ${error}`);
-    }
-  };
-
-  const extractAlias = (value: string): string => {
-    const index = value.indexOf("@");
-    return value.substring(index);
-  };
-
-  const getUser = async (
-    authToken: AuthToken,
-    alias: string
-  ): Promise<User | null> => {
-    // TODO: Replace with the result of calling server
-    return FakeData.instance.findUserByAlias(alias);
-  };
-
   return (
     <div className="container px-0 overflow-visible vh-100">
       <InfiniteScroll
@@ -123,11 +90,7 @@ const FeedScroller = () => {
         loader={<h4>Loading...</h4>}
       >
         {items.map((item, index) => (
-          <StatusItem
-            key={index}
-            status={item}
-            navigateToUser={navigateToUser}
-          />
+          <StatusItem key={index} status={item} />
         ))}
       </InfiniteScroll>
     </div>
