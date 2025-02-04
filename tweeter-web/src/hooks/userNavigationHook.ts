@@ -3,7 +3,7 @@ import { AuthToken, FakeData, User } from "tweeter-shared";
 import { UserInfoContext } from "../components/userInfo/UserInfoProvider";
 import useToastListener from "../components/toaster/ToastListenerHook";
 
-const useNavigation = () => {
+const useUserNavigation = () => {
   const { displayErrorMessage } = useToastListener();
 
   const { currentUser, displayedUser, setDisplayedUser, authToken } =
@@ -45,4 +45,4 @@ const useNavigation = () => {
   return { navigateToUser };
 };
 
-export default useNavigation;
+export default useUserNavigation;

@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Status } from "tweeter-shared";
 import Post from "./Post";
-import useNavigation from "../../hooks/useNavigationHook";
+import useUserNavigation from "../../hooks/userNavigationHook";
 
 interface Props {
   status: Status;
 }
 
 const StatusItem: React.FC<Props> = (props: Props) => {
-  const { navigateToUser } = useNavigation();
+  const { navigateToUser } = useUserNavigation();
 
   return (
     <div className="row mb-3 mx-0 px-0 border rounded bg-white">
