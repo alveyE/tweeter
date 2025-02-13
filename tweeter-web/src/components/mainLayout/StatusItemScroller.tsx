@@ -1,7 +1,7 @@
 import InfiniteScroll from "react-infinite-scroll-component";
-import { AuthToken, Status } from "tweeter-shared";
+import { Status } from "tweeter-shared";
 import useToastListener from "../toaster/ToastListenerHook";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import StatusItem from "../statusItem/StatusItem";
 import useUserInfo from "../../hooks/userInfoHook";
 import {
