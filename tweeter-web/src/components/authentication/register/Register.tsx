@@ -16,6 +16,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [, setForceRerender] = useState(false);
 
   const navigate = useNavigate();
   const { updateUserInfo } = useUserInfo();
@@ -48,6 +49,7 @@ const Register = () => {
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     presenter.handleImageFile(file);
+    setForceRerender((prev) => !prev);
   };
 
   const doRegister = async () => {
