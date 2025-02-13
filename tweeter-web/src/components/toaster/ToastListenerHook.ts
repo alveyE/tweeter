@@ -1,6 +1,6 @@
 import useToaster from "./ToastHook";
 
-interface ToastListener {
+export interface ToastListener {
   displayInfoMessage: (
     message: string,
     duration: number,
