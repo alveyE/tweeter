@@ -1,13 +1,13 @@
 import { AuthToken, Status, User } from "tweeter-shared";
-import { PostService } from "../model/service/PostService";
+import { StatusService } from "../model/service/StatusService";
 
 export class PostPresenter {
-  private postService: PostService;
+  private postService: StatusService;
 
   private _isLoading = false;
 
   public constructor() {
-    this.postService = new PostService();
+    this.postService = new StatusService();
   }
 
   public get isLoading(): boolean {
