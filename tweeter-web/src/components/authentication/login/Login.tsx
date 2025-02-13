@@ -7,6 +7,8 @@ import { AuthToken, FakeData, User } from "tweeter-shared";
 import useToastListener from "../../toaster/ToastListenerHook";
 import AuthenticationFields from "../AuthenticationFields";
 import useUserInfo from "../../../hooks/userInfoHook";
+import { LoginPresenter } from "../../../presenters/LoginPresenter";
+import { AuthenticationView } from "../../../presenters/AuthenticationPresenter";
 
 interface Props {
   originalUrl?: string;
@@ -22,6 +24,12 @@ const Login = (props: Props) => {
   const { updateUserInfo } = useUserInfo();
   const { displayErrorMessage } = useToastListener();
 
+  const listener: AuthenticationView = {
+    updateUserInfo,
+  };
+
+  const [presenter] = useState(new LoginPresenter(listener));
+
   const checkSubmitButtonStatus = (): boolean => {
     return !alias || !password;
   };
@@ -36,9 +44,9 @@ const Login = (props: Props) => {
     try {
       setIsLoading(true);
 
-      const [user, authToken] = await login(alias, password);
+      const [user, authToken] = await presenter.doLogin(alias, password);
 
-      updateUserInfo(user, user, authToken, rememberMe);
+      presenter.updateUserInfo(user, user, authToken, rememberMe);
 
       if (!!props.originalUrl) {
         navigate(props.originalUrl);
@@ -52,20 +60,6 @@ const Login = (props: Props) => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const login = async (
-    alias: string,
-    password: string
-  ): Promise<[User, AuthToken]> => {
-    // TODO: Replace with the result of calling the server
-    const user = FakeData.instance.firstUser;
-
-    if (user === null) {
-      throw new Error("Invalid alias or password");
-    }
-
-    return [user, FakeData.instance.authToken];
   };
 
   const inputFieldGenerator = () => {
