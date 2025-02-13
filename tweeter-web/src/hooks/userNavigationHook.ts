@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { AuthToken, FakeData, User } from "tweeter-shared";
+import { useContext, useState } from "react";
 import { UserInfoContext } from "../components/userInfo/UserInfoProvider";
 import useToastListener from "../components/toaster/ToastListenerHook";
+import { UserNavigationPresenter } from "../presenters/UserNavigationPresenter";
 
 const useUserNavigation = () => {
   const { displayErrorMessage } = useToastListener();
@@ -9,17 +9,11 @@ const useUserNavigation = () => {
   const { currentUser, displayedUser, setDisplayedUser, authToken } =
     useContext(UserInfoContext);
 
+  const [presenter] = useState(new UserNavigationPresenter());
+
   const extractAlias = (value: string): string => {
     const index = value.indexOf("@");
     return value.substring(index);
-  };
-
-  const getUser = async (
-    authToken: AuthToken,
-    alias: string
-  ): Promise<User | null> => {
-    // TODO: Replace with the result of calling server
-    return FakeData.instance.findUserByAlias(alias);
   };
 
   const navigateToUser = async (event: React.MouseEvent): Promise<void> => {
@@ -28,7 +22,7 @@ const useUserNavigation = () => {
     try {
       const alias = extractAlias(event.target.toString());
 
-      const user = await getUser(authToken!, alias);
+      const user = await presenter.getUser(authToken!, alias);
 
       if (!!user) {
         if (currentUser!.equals(user)) {
