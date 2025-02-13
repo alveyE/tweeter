@@ -28,17 +28,25 @@ export class RegisterPresenter extends AuthenticationPresenter {
     firstName: string,
     lastName: string,
     alias: string,
-    password: string
-  ): Promise<[User, AuthToken]> {
-    const [user, authToken] = await this.userService.register(
-      firstName,
-      lastName,
-      alias,
-      password,
-      this.imageBytes,
-      this.imageFileExtension
-    );
-    return [user, authToken];
+    password: string,
+    rememberMe: boolean
+  ): Promise<void> {
+    try {
+      const [user, authToken] = await this.userService.register(
+        firstName,
+        lastName,
+        alias,
+        password,
+        this.imageBytes,
+        this.imageFileExtension
+      );
+
+      this.updateUserInfo(user, user, authToken, rememberMe);
+    } catch (error) {
+      this._view.displayErrorMessage(
+        `Failed to register user because of exception: ${error}`
+      );
+    }
   }
 
   private getFileExtension(file: File): string | undefined {

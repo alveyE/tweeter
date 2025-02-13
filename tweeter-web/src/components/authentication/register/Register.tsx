@@ -22,6 +22,7 @@ const Register = () => {
   const { displayErrorMessage } = useToastListener();
 
   const listener: AuthenticationView = {
+    displayErrorMessage,
     updateUserInfo,
   };
 
@@ -50,25 +51,12 @@ const Register = () => {
   };
 
   const doRegister = async () => {
-    try {
-      setIsLoading(true);
+    setIsLoading(true);
 
-      const [user, authToken] = await presenter.doRegister(
-        firstName,
-        lastName,
-        alias,
-        password
-      );
+    presenter.doRegister(firstName, lastName, alias, password, rememberMe);
+    navigate("/");
 
-      presenter.updateUserInfo(user, user, authToken, rememberMe);
-      navigate("/");
-    } catch (error) {
-      displayErrorMessage(
-        `Failed to register user because of exception: ${error}`
-      );
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(false);
   };
 
   const inputFieldGenerator = () => {

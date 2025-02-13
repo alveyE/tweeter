@@ -12,10 +12,18 @@ export class LoginPresenter extends AuthenticationPresenter {
 
   public async doLogin(
     alias: string,
-    password: string
-  ): Promise<[User, AuthToken]> {
-    const [user, authToken] = await this.userService.login(alias, password);
-    return [user, authToken];
+    password: string,
+    rememberMe: boolean
+  ): Promise<void> {
+    try {
+      const [user, authToken] = await this.userService.login(alias, password);
+
+      this.updateUserInfo(user, user, authToken, rememberMe);
+    } catch (error) {
+      this._view.displayErrorMessage(
+        `Failed to log user in because of exception: ${error}`
+      );
+    }
   }
 
   public updateUserInfo(

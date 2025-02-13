@@ -2,6 +2,7 @@ import { AuthToken, User } from "tweeter-shared";
 import { UserService } from "../model/service/UserService";
 
 export interface AuthenticationView {
+  displayErrorMessage(message: string): void;
   updateUserInfo(
     currentUser: User,
     displayedUser: User | null,

@@ -24,6 +24,7 @@ const Login = (props: Props) => {
   const { displayErrorMessage } = useToastListener();
 
   const listener: AuthenticationView = {
+    displayErrorMessage,
     updateUserInfo,
   };
 
@@ -40,25 +41,17 @@ const Login = (props: Props) => {
   };
 
   const doLogin = async () => {
-    try {
-      setIsLoading(true);
+    setIsLoading(true);
 
-      const [user, authToken] = await presenter.doLogin(alias, password);
+    await presenter.doLogin(alias, password, rememberMe);
 
-      presenter.updateUserInfo(user, user, authToken, rememberMe);
-
-      if (!!props.originalUrl) {
-        navigate(props.originalUrl);
-      } else {
-        navigate("/");
-      }
-    } catch (error) {
-      displayErrorMessage(
-        `Failed to log user in because of exception: ${error}`
-      );
-    } finally {
-      setIsLoading(false);
+    if (!!props.originalUrl) {
+      navigate(props.originalUrl);
+    } else {
+      navigate("/");
     }
+
+    setIsLoading(false);
   };
 
   const inputFieldGenerator = () => {
