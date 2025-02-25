@@ -18,11 +18,9 @@ const UserInfo = () => {
     useUserInfo();
 
   const listener: UserInfoView = {
-    toastListener: {
-      displayErrorMessage,
-      displayInfoMessage,
-      clearLastInfoMessage,
-    },
+    displayErrorMessage,
+    displayInfoMessage,
+    clearLastInfoMessage,
   };
 
   const [presenter] = useState(new UserInfoPresenter(listener));

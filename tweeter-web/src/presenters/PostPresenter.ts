@@ -27,7 +27,7 @@ export class PostPresenter extends Presenter<PostView> {
     authToken: AuthToken,
     post: string
   ) {
-    this.doFailureReportingOperation(async () => {
+    await this.doFailureReportingOperation(async () => {
       this.view.displayInfoMessage("Posting status...", 0);
       this.isLoading = true;
       const status = new Status(post, currentUser, Date.now());
