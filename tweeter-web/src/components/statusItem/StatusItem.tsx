@@ -5,10 +5,10 @@ import Post from "./Post";
 import useUserNavigation from "../../hooks/userNavigationHook";
 
 interface Props {
-  status: Status;
+  value: Status;
 }
 
-const StatusItem: React.FC<Props> = (props: Props) => {
+const StatusItem = (props: Props) => {
   const { navigateToUser } = useUserNavigation();
 
   return (
@@ -18,7 +18,7 @@ const StatusItem: React.FC<Props> = (props: Props) => {
           <div className="row mx-0 px-0">
             <div className="col-auto p-3">
               <img
-                src={props.status.user.imageUrl}
+                src={props.value.user.imageUrl}
                 className="img-fluid"
                 width="80"
                 alt="Posting user"
@@ -27,19 +27,19 @@ const StatusItem: React.FC<Props> = (props: Props) => {
             <div className="col">
               <h2>
                 <b>
-                  {props.status.user.firstName} {props.status.user.lastName}
+                  {props.value.user.firstName} {props.value.user.lastName}
                 </b>{" "}
                 -{" "}
                 <Link
-                  to={props.status.user.alias}
+                  to={props.value.user.alias}
                   onClick={(event) => navigateToUser(event)}
                 >
-                  {props.status.user.alias}
+                  {props.value.user.alias}
                 </Link>
               </h2>
-              {props.status.formattedDate}
+              {props.value.formattedDate}
               <br />
-              <Post status={props.status} />
+              <Post status={props.value} />
             </div>
           </div>
         </div>
