@@ -27,19 +27,14 @@ export class PostPresenter extends Presenter<PostView> {
     authToken: AuthToken,
     post: string
   ) {
-    try {
+    this.doFailureReportingOperation(async () => {
       this.view.displayInfoMessage("Posting status...", 0);
       this.isLoading = true;
       const status = new Status(post, currentUser, Date.now());
       await this.postService.postStatus(authToken, status);
       this.view.displayInfoMessage("Status posted successfully!", 2000);
-    } catch (error) {
-      this.view.displayErrorMessage(
-        `Failed to post the status because of exception: ${error}`
-      );
-    } finally {
-      this.isLoading = false;
-      this.view.clearLastInfoMessage();
-    }
+    }, "post the status");
+    this.isLoading = false;
+    this.view.clearLastInfoMessage();
   }
 }

@@ -105,7 +105,7 @@ export class UserInfoPresenter extends Presenter<UserInfoView> {
     authToken: AuthToken,
     displayedUser: User
   ): Promise<void> {
-    try {
+    this.doFailureReportingOperation(async () => {
       this.view.displayInfoMessage(`Unfollowing ${displayedUser!.name}...`, 0);
 
       const [followerCount, followeeCount] = await this.userService.unfollow(
@@ -116,12 +116,7 @@ export class UserInfoPresenter extends Presenter<UserInfoView> {
       this._isFollower = false;
       this._followerCount = followerCount;
       this._followeeCount = followeeCount;
-    } catch (error) {
-      this.view.displayErrorMessage(
-        `Failed to unfollow user because of exception: ${error}`
-      );
-    } finally {
-      this.view.clearLastInfoMessage();
-    }
+    }, "unfollow user");
+    this.view.clearLastInfoMessage();
   }
 }

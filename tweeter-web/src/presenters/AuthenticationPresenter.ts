@@ -19,10 +19,12 @@ export abstract class AuthenticationPresenter extends Presenter<AuthenticationVi
     this.userService = new UserService();
   }
 
-  public abstract updateUserInfo(
+  public updateUserInfo(
     currentUser: User,
     displayedUser: User | null,
     authToken: AuthToken,
     remember: boolean
-  ): void;
+  ): void {
+    this.view.updateUserInfo(currentUser, displayedUser, authToken, remember);
+  }
 }

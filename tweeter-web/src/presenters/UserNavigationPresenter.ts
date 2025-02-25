@@ -21,16 +21,12 @@ export class UserNavigationPresenter extends Presenter<UserNavigationView> {
     event: React.MouseEvent,
     authToken: AuthToken
   ): Promise<User | null> {
-    try {
+    let user: User | null = null;
+    this.doFailureReportingOperation(async () => {
       const alias = this.extractAlias(event.target.toString());
 
-      const user = await this.userService.getUser(authToken, alias);
-      return user;
-    } catch (error) {
-      this.view.displayErrorMessage(
-        `Failed to get user because of exception: ${error}`
-      );
-      return null;
-    }
+      user = await this.userService.getUser(authToken, alias);
+    }, "get user");
+    return user;
   }
 }

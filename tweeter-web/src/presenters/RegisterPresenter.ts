@@ -1,20 +1,11 @@
 import { AuthToken, User } from "tweeter-shared";
-import { UserService } from "../model/service/UserService";
 import { Buffer } from "buffer";
-import {
-  AuthenticationPresenter,
-  AuthenticationView,
-} from "./AuthenticationPresenter";
+import { AuthenticationPresenter } from "./AuthenticationPresenter";
 
 export class RegisterPresenter extends AuthenticationPresenter {
   private imageBytes: Uint8Array = new Uint8Array();
   private _imageFileExtension: string = "";
   private _imageUrl: string = "";
-
-  public constructor(view: AuthenticationView) {
-    super(view);
-    this.userService = new UserService();
-  }
 
   public get imageUrl(): string {
     return this._imageUrl;
@@ -31,7 +22,7 @@ export class RegisterPresenter extends AuthenticationPresenter {
     password: string,
     rememberMe: boolean
   ): Promise<void> {
-    try {
+    this.doFailureReportingOperation(async () => {
       const [user, authToken] = await this.userService.register(
         firstName,
         lastName,
@@ -42,24 +33,11 @@ export class RegisterPresenter extends AuthenticationPresenter {
       );
 
       this.updateUserInfo(user, user, authToken, rememberMe);
-    } catch (error) {
-      this.view.displayErrorMessage(
-        `Failed to register user because of exception: ${error}`
-      );
-    }
+    }, "register user");
   }
 
   private getFileExtension(file: File): string | undefined {
     return file.name.split(".").pop();
-  }
-
-  public updateUserInfo(
-    currentUser: User,
-    displayedUser: User | null,
-    authToken: AuthToken,
-    remember: boolean
-  ): void {
-    this.view.updateUserInfo(currentUser, displayedUser, authToken, remember);
   }
 
   public handleImageFile(file: File | undefined) {
