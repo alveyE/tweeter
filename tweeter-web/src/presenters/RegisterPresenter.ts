@@ -43,7 +43,7 @@ export class RegisterPresenter extends AuthenticationPresenter {
 
       this.updateUserInfo(user, user, authToken, rememberMe);
     } catch (error) {
-      this._view.displayErrorMessage(
+      this.view.displayErrorMessage(
         `Failed to register user because of exception: ${error}`
       );
     }
@@ -59,7 +59,7 @@ export class RegisterPresenter extends AuthenticationPresenter {
     authToken: AuthToken,
     remember: boolean
   ): void {
-    this._view.updateUserInfo(currentUser, displayedUser, authToken, remember);
+    this.view.updateUserInfo(currentUser, displayedUser, authToken, remember);
   }
 
   public handleImageFile(file: File | undefined) {

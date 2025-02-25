@@ -20,7 +20,7 @@ export class LoginPresenter extends AuthenticationPresenter {
 
       this.updateUserInfo(user, user, authToken, rememberMe);
     } catch (error) {
-      this._view.displayErrorMessage(
+      this.view.displayErrorMessage(
         `Failed to log user in because of exception: ${error}`
       );
     }
@@ -32,6 +32,6 @@ export class LoginPresenter extends AuthenticationPresenter {
     authToken: AuthToken,
     remember: boolean
   ): void {
-    this._view.updateUserInfo(currentUser, displayedUser, authToken, remember);
+    this.view.updateUserInfo(currentUser, displayedUser, authToken, remember);
   }
 }

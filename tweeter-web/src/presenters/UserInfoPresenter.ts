@@ -1,17 +1,15 @@
 import { AuthToken, User } from "tweeter-shared";
 import { UserService } from "../model/service/UserService";
 import { ToastListener } from "../components/toaster/ToastListenerHook";
+import { MessageView, Presenter } from "./Presenter";
 
-export interface UserInfoView {
-  toastListener: ToastListener;
-}
+export interface UserInfoView extends MessageView {}
 
-export class UserInfoPresenter {
-  private view: UserInfoView;
+export class UserInfoPresenter extends Presenter<UserInfoView> {
   private userService: UserService;
 
   public constructor(view: UserInfoView) {
-    this.view = view;
+    super(view);
     this.userService = new UserService();
   }
 
@@ -47,7 +45,7 @@ export class UserInfoPresenter {
         );
       }
     } catch (error) {
-      this.view.toastListener.displayErrorMessage(
+      this.view.displayErrorMessage(
         `Failed to determine follower status because of exception: ${error}`
       );
     }
@@ -60,7 +58,7 @@ export class UserInfoPresenter {
         displayedUser
       );
     } catch (error) {
-      this.view.toastListener.displayErrorMessage(
+      this.view.displayErrorMessage(
         `Failed to get followees count because of exception: ${error}`
       );
     }
@@ -73,7 +71,7 @@ export class UserInfoPresenter {
         displayedUser
       );
     } catch (error) {
-      this.view.toastListener.displayErrorMessage(
+      this.view.displayErrorMessage(
         `Failed to get followers count because of exception: ${error}`
       );
     }
@@ -84,10 +82,7 @@ export class UserInfoPresenter {
     displayedUser: User
   ): Promise<void> {
     try {
-      this.view.toastListener.displayInfoMessage(
-        `Following ${displayedUser!.name}...`,
-        0
-      );
+      this.view.displayInfoMessage(`Following ${displayedUser!.name}...`, 0);
 
       const [followerCount, followeeCount] = await this.userService.follow(
         authToken!,
@@ -98,11 +93,11 @@ export class UserInfoPresenter {
       this._followerCount = followerCount;
       this._followeeCount = followeeCount;
     } catch (error) {
-      this.view.toastListener.displayErrorMessage(
+      this.view.displayErrorMessage(
         `Failed to follow user because of exception: ${error}`
       );
     } finally {
-      this.view.toastListener.clearLastInfoMessage();
+      this.view.clearLastInfoMessage();
     }
   }
 
@@ -111,10 +106,7 @@ export class UserInfoPresenter {
     displayedUser: User
   ): Promise<void> {
     try {
-      this.view.toastListener.displayInfoMessage(
-        `Unfollowing ${displayedUser!.name}...`,
-        0
-      );
+      this.view.displayInfoMessage(`Unfollowing ${displayedUser!.name}...`, 0);
 
       const [followerCount, followeeCount] = await this.userService.unfollow(
         authToken!,
@@ -125,11 +117,11 @@ export class UserInfoPresenter {
       this._followerCount = followerCount;
       this._followeeCount = followeeCount;
     } catch (error) {
-      this.view.toastListener.displayErrorMessage(
+      this.view.displayErrorMessage(
         `Failed to unfollow user because of exception: ${error}`
       );
     } finally {
-      this.view.toastListener.clearLastInfoMessage();
+      this.view.clearLastInfoMessage();
     }
   }
 }

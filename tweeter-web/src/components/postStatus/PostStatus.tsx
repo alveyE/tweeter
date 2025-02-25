@@ -2,7 +2,7 @@ import "./PostStatus.css";
 import { useState } from "react";
 import useToastListener from "../toaster/ToastListenerHook";
 import useUserInfo from "../../hooks/userInfoHook";
-import { PostPresenter } from "../../presenters/PostPresenter";
+import { PostPresenter, PostView } from "../../presenters/PostPresenter";
 
 const PostStatus = () => {
   const { displayErrorMessage, displayInfoMessage, clearLastInfoMessage } =
@@ -11,21 +11,17 @@ const PostStatus = () => {
   const { currentUser, authToken } = useUserInfo();
   const [post, setPost] = useState("");
 
-  const [presenter] = useState(new PostPresenter());
+  const listener: PostView = {
+    displayErrorMessage,
+    displayInfoMessage,
+    clearLastInfoMessage,
+  };
+
+  const [presenter] = useState(new PostPresenter(listener));
 
   const submitPost = async (event: React.MouseEvent) => {
     event.preventDefault();
-    try {
-      displayInfoMessage("Posting status...", 0);
-      await presenter.submitPost(currentUser!, authToken!, post);
-      displayInfoMessage("Status posted successfully!", 2000);
-    } catch (error) {
-      displayErrorMessage(
-        `Failed to post the status because of exception: ${error}`
-      );
-    } finally {
-      clearLastInfoMessage();
-    }
+    presenter.submitPost(currentUser!, authToken!, post);
     setPost("");
   };
 

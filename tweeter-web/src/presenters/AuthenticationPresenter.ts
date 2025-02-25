@@ -1,8 +1,8 @@
 import { AuthToken, User } from "tweeter-shared";
 import { UserService } from "../model/service/UserService";
+import { Presenter, View } from "./Presenter";
 
-export interface AuthenticationView {
-  displayErrorMessage(message: string): void;
+export interface AuthenticationView extends View {
   updateUserInfo(
     currentUser: User,
     displayedUser: User | null,
@@ -11,12 +11,11 @@ export interface AuthenticationView {
   ): void;
 }
 
-export abstract class AuthenticationPresenter {
-  protected _view: AuthenticationView;
+export abstract class AuthenticationPresenter extends Presenter<AuthenticationView> {
   protected userService: UserService;
 
   protected constructor(view: AuthenticationView) {
-    this._view = view;
+    super(view);
     this.userService = new UserService();
   }
 

@@ -3,10 +3,8 @@ export interface View {
 }
 
 export interface MessageView extends View {
-  displayMessage(message: string): void;
-  //...
-  displayInfoMessage(message: string): void;
-  //...
+  displayInfoMessage(message: string, duration: number): void;
+  clearLastInfoMessage(): void;
 }
 
 export class Presenter<V extends View> {
