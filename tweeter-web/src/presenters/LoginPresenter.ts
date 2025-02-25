@@ -5,12 +5,13 @@ export class LoginPresenter extends AuthenticationPresenter {
   public async doLogin(
     alias: string,
     password: string,
-    rememberMe: boolean
+    rememberMe: boolean,
+    originalUrl: string | undefined
   ): Promise<void> {
     this.doFailureReportingOperation(async () => {
       const [user, authToken] = await this.userService.login(alias, password);
 
-      this.updateUserInfo(user, user, authToken, rememberMe);
+      this.navigateTo(user, user, authToken, rememberMe, originalUrl);
     }, "log user in");
   }
 }

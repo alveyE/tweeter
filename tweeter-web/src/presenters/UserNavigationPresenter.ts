@@ -22,7 +22,7 @@ export class UserNavigationPresenter extends Presenter<UserNavigationView> {
     authToken: AuthToken
   ): Promise<User | null> {
     let user: User | null = null;
-    this.doFailureReportingOperation(async () => {
+    await this.doFailureReportingOperation(async () => {
       const alias = this.extractAlias(event.target.toString());
 
       user = await this.userService.getUser(authToken, alias);

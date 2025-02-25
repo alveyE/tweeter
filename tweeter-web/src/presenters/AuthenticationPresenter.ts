@@ -9,22 +9,30 @@ export interface AuthenticationView extends View {
     authToken: AuthToken,
     remember: boolean
   ): void;
+  navigate(path: string): void;
 }
 
 export abstract class AuthenticationPresenter extends Presenter<AuthenticationView> {
   protected userService: UserService;
 
-  protected constructor(view: AuthenticationView) {
+  public constructor(view: AuthenticationView) {
     super(view);
     this.userService = new UserService();
   }
 
-  public updateUserInfo(
+  protected navigateTo(
     currentUser: User,
     displayedUser: User | null,
     authToken: AuthToken,
-    remember: boolean
+    remember: boolean,
+    path: string | undefined
   ): void {
     this.view.updateUserInfo(currentUser, displayedUser, authToken, remember);
+
+    if (!!path) {
+      this.view.navigate(path);
+    } else {
+      this.view.navigate("/");
+    }
   }
 }

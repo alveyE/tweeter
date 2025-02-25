@@ -26,6 +26,7 @@ const Login = (props: Props) => {
   const listener: AuthenticationView = {
     displayErrorMessage,
     updateUserInfo,
+    navigate,
   };
 
   const [presenter] = useState(new LoginPresenter(listener));
@@ -43,13 +44,7 @@ const Login = (props: Props) => {
   const doLogin = async () => {
     setIsLoading(true);
 
-    await presenter.doLogin(alias, password, rememberMe);
-
-    if (!!props.originalUrl) {
-      navigate(props.originalUrl);
-    } else {
-      navigate("/");
-    }
+    await presenter.doLogin(alias, password, rememberMe, props.originalUrl);
 
     setIsLoading(false);
   };

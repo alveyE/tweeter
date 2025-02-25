@@ -25,6 +25,7 @@ const Register = () => {
   const listener: AuthenticationView = {
     displayErrorMessage,
     updateUserInfo,
+    navigate,
   };
 
   const [presenter] = useState(new RegisterPresenter(listener));
@@ -55,8 +56,13 @@ const Register = () => {
   const doRegister = async () => {
     setIsLoading(true);
 
-    presenter.doRegister(firstName, lastName, alias, password, rememberMe);
-    navigate("/");
+    await presenter.doRegister(
+      firstName,
+      lastName,
+      alias,
+      password,
+      rememberMe
+    );
 
     setIsLoading(false);
   };

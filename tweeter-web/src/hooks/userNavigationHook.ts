@@ -22,7 +22,6 @@ const useUserNavigation = () => {
     event.preventDefault();
 
     const user = await presenter.navigateToUser(event, authToken!);
-
     if (!!user) {
       if (currentUser!.equals(user)) {
         setDisplayedUser(currentUser!);

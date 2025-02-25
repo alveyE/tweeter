@@ -32,7 +32,7 @@ export class RegisterPresenter extends AuthenticationPresenter {
         this.imageFileExtension
       );
 
-      this.updateUserInfo(user, user, authToken, rememberMe);
+      this.navigateTo(user, user, authToken, rememberMe, undefined);
     }, "register user");
   }
 
