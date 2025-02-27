@@ -1,6 +1,5 @@
 import { AuthToken, User } from "tweeter-shared";
 import { UserService } from "../model/service/UserService";
-import { ToastListener } from "../components/toaster/ToastListenerHook";
 import { MessageView, Presenter } from "./Presenter";
 
 export interface UserInfoView extends MessageView {}
