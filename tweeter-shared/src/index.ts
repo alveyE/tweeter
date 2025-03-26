@@ -11,8 +11,13 @@ export type { UserDto } from "./model/dto/UserDto";
 
 export type { PagedUserItemRequest } from "./model/domain/net/request/PagedUserItemRequest";
 export type { AuthenticationRequest } from "./model/domain/net/request/AuthenticationRequest";
+export type { LogoutRequest } from "./model/domain/net/request/AuthenticationRequest";
+export type { RegisterRequest } from "./model/domain/net/request/AuthenticationRequest";
+export type { GetUserRequest } from "./model/domain/net/request/GetUserRequest";
 
+export type { TweeterResponse } from "./model/domain/net/response/TweeterResponse";
 export type { PagedUserItemResponse } from "./model/domain/net/response/PagedUserItemResponse";
 export type { AuthenticationResponse } from "./model/domain/net/response/AuthenticationResponse";
+export type { GetUserResponse } from "./model/domain/net/response/GetUserResponse";
 
 export { FakeData } from "./util/FakeData";
