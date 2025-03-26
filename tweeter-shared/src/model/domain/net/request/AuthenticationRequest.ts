@@ -1,11 +1,11 @@
-export interface AuthenticationRequest {
+import { TweeterRequest } from "./TweeterRequest";
+
+export interface AuthenticationRequest extends TweeterRequest {
   readonly userAlias: string;
   readonly password: string;
 }
 
-export interface LogoutRequest {
-  readonly token: string;
-}
+export interface LogoutRequest extends TweeterRequest {}
 
 export interface RegisterRequest extends AuthenticationRequest {
   readonly firstName: string;

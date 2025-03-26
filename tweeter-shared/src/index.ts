@@ -11,6 +11,7 @@ export type { UserDto } from "./model/dto/UserDto";
 export type { StatusDto } from "./model/dto/StatusDto";
 export type { PostSegmentDto } from "./model/dto/PostSegmentDto";
 
+export type { TweeterRequest } from "./model/domain/net/request/TweeterRequest";
 export type { PagedUserItemRequest } from "./model/domain/net/request/PagedUserItemRequest";
 export type {
   LogoutRequest,
