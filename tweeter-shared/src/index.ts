@@ -10,7 +10,9 @@ export { AuthToken } from "./model/domain/AuthToken";
 export type { UserDto } from "./model/dto/UserDto";
 
 export type { PagedUserItemRequest } from "./model/domain/net/request/PagedUserItemRequest";
+export type { AuthenticationRequest } from "./model/domain/net/request/AuthenticationRequest";
 
 export type { PagedUserItemResponse } from "./model/domain/net/response/PagedUserItemResponse";
+export type { AuthenticationResponse } from "./model/domain/net/response/AuthenticationResponse";
 
 export { FakeData } from "./util/FakeData";

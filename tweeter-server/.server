@@ -2,5 +2,7 @@ BUCKET='cs340-tweeter-alvey'
 LAMBDA_ROLE='arn:aws:iam::202533539127:role/Tweeter'
 EDIT_LAMBDALIST='
 tweeterGetFollowees | lambda/follow/GetFolloweesLambda.handler
+tweeterLogin | lambda/user/LoginUserLambda.handler
+tweeterGetFollowers | lambda/follow/GetFollowersLambda.handler
 '
-LAMBDALAYER_ARN='arn:aws:lambda:us-west-2:202533539127:layer:tweeter:2'
+LAMBDALAYER_ARN='arn:aws:lambda:us-west-2:202533539127:layer:tweeter:3'
