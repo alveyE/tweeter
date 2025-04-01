@@ -48,7 +48,7 @@ export class UserService {
         userImageBytes: imageStringBase64,
         imageFileExtension: imageFileExtension,
       },
-      "/register",
+      "/user/register",
       "User could not be registered"
     );
 
