@@ -46,37 +46,6 @@ export class StatusDynamoDBDao implements StatusDAO {
     await this.client.send(new PutCommand(params));
   }
 
-  async getStoryItem(status: StatusEntity): Promise<StatusEntity | null> {
-    const params = {
-      TableName: this.StoryTableName,
-      Key: {
-        [this.poster_handleAttr]: status.userHandle,
-        [this.timestampAttr]: status.timestamp,
-      },
-    };
-    const output = await this.client.send(new GetCommand(params));
-    if (output.Item === undefined) {
-      console.log("get returned undefined");
-      return null;
-    } else {
-      const statusEntity: StatusEntity = {
-        userHandle: output.Item[this.poster_handleAttr],
-        status: output.Item[this.statusAttr],
-        timestamp: output.Item[this.timestampAttr],
-      };
-      return statusEntity;
-    }
-  }
-  // async getFeedItem(status: StatusEntity): Promise<StatusEntity | null> {
-
-  // }
-
-  async update(
-    oldStatus: StatusEntity,
-    newStatus: StatusEntity
-  ): Promise<void> {}
-  async delete(status: StatusEntity): Promise<void> {}
-
   async getPageOfStory(
     userHandle: string,
     pageSize: number,
@@ -89,6 +58,7 @@ export class StatusDynamoDBDao implements StatusDAO {
       },
       TableName: this.StoryTableName,
       Limit: pageSize,
+      ScanIndexForward: false,
       ExclusiveStartKey:
         lastStoryStamp === undefined
           ? undefined
@@ -122,6 +92,7 @@ export class StatusDynamoDBDao implements StatusDAO {
       },
       TableName: this.FeedTableName,
       Limit: pageSize,
+      ScanIndexForward: false,
       ExclusiveStartKey:
         lastStoryStamp === undefined
           ? undefined
