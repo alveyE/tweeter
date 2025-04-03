@@ -105,7 +105,9 @@ export class ServerFacade {
       if (user == null) {
         throw new Error(message);
       } else {
-        return [user, response.authToken];
+        const authToken = new AuthToken(response.token, Date.now());
+
+        return [user, authToken];
       }
     } else {
       console.error(response);

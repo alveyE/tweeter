@@ -39,11 +39,11 @@ export class AuthTokenDynamoDBDao implements AuthTokenDao {
     const output = await this.client.send(new GetCommand(params));
     return output.Item == undefined
       ? undefined
-      : {
-          alias: output.Item[this.aliasAttr],
-          token: output.Item[this.tokenAttr],
-          timeStamp: output.Item[this.timeStampAttr],
-        };
+      : new AuthTokenEntity(
+          output.Item[this.aliasAttr],
+          output.Item[this.tokenAttr],
+          output.Item[this.timeStampAttr]
+        );
   }
 
   public async updateAuthToken(

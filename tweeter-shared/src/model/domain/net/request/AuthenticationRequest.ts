@@ -10,6 +10,6 @@ export interface LogoutRequest extends TweeterRequest {}
 export interface RegisterRequest extends AuthenticationRequest {
   readonly firstName: string;
   readonly lastName: string;
-  readonly userImageBytes: Uint8Array | string;
+  readonly userImageBytes: string;
   readonly imageFileExtension: string;
 }
