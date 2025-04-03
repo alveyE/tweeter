@@ -14,6 +14,13 @@ export class UserNavigationPresenter extends Presenter<UserNavigationView> {
 
   private extractAlias(value: string): string {
     const index = value.indexOf("@");
+    if (index === -1) {
+      const lastSlashIndex = value.lastIndexOf("/");
+      if (lastSlashIndex !== -1) {
+        return value.substring(lastSlashIndex + 1);
+      }
+      return value;
+    }
     return value.substring(index);
   }
 

@@ -35,7 +35,13 @@ const ItemScroller = <T, U>(props: Props<T, U>) => {
   // Add new items whenever there are new items to add
   useEffect(() => {
     if (newItems) {
-      setItems([...items, ...newItems]);
+      //filter out duplicates
+      const filteredNewItems = newItems.filter((item) => {
+        return !items.some((existingItem) => {
+          return JSON.stringify(existingItem) === JSON.stringify(item);
+        });
+      });
+      setItems([...items, ...filteredNewItems]);
     }
   }, [newItems]);
 

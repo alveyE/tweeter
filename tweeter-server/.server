@@ -16,4 +16,4 @@ tweeterGetMoreFeedItems | lambda/status/GetMoreFeedItemsLambda.handler
 tweeterGetMoreStoryItems | lambda/status/GetMoreStoryItemsLambda.handler
 tweeterPostStatus | lambda/status/PostStatusLambda.handler
 '
-LAMBDALAYER_ARN='arn:aws:lambda:us-west-2:202533539127:layer:tweeter:16'
+LAMBDALAYER_ARN='arn:aws:lambda:us-west-2:202533539127:layer:tweeter:17'

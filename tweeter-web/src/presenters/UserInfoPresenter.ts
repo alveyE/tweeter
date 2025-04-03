@@ -2,7 +2,9 @@ import { AuthToken, User } from "tweeter-shared";
 import { UserService } from "../model/service/UserService";
 import { MessageView, Presenter } from "./Presenter";
 
-export interface UserInfoView extends MessageView {}
+export interface UserInfoView extends MessageView {
+  toggleLoad(setTo: boolean): void;
+}
 
 export class UserInfoPresenter extends Presenter<UserInfoView> {
   private userService: UserService;
@@ -28,7 +30,21 @@ export class UserInfoPresenter extends Presenter<UserInfoView> {
     return this._followerCount;
   }
 
-  public async setIsFollowerStatus(
+  public async loadFollowInfo(
+    authToken: AuthToken,
+    currentUser: User,
+    displayedUser: User
+  ): Promise<void> {
+    this.view.toggleLoad(true);
+    await this.doFailureReportingOperation(async () => {
+      await this.setIsFollowerStatus(authToken, currentUser, displayedUser);
+      await this.setNumbFollowees(authToken, displayedUser);
+      await this.setNumbFollowers(authToken, displayedUser);
+    }, "load follow info");
+    this.view.toggleLoad(false);
+  }
+
+  private async setIsFollowerStatus(
     authToken: AuthToken,
     currentUser: User,
     displayedUser: User
@@ -50,7 +66,7 @@ export class UserInfoPresenter extends Presenter<UserInfoView> {
     }
   }
 
-  public async setNumbFollowees(authToken: AuthToken, displayedUser: User) {
+  private async setNumbFollowees(authToken: AuthToken, displayedUser: User) {
     try {
       this._followeeCount = await this.userService.getFolloweeCount(
         authToken,
@@ -63,7 +79,7 @@ export class UserInfoPresenter extends Presenter<UserInfoView> {
     }
   }
 
-  public async setNumbFollowers(authToken: AuthToken, displayedUser: User) {
+  private async setNumbFollowers(authToken: AuthToken, displayedUser: User) {
     try {
       this._followerCount = await this.userService.getFollowerCount(
         authToken,

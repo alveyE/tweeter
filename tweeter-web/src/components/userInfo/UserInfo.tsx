@@ -21,6 +21,9 @@ const UserInfo = () => {
     displayErrorMessage,
     displayInfoMessage,
     clearLastInfoMessage,
+    toggleLoad: (setTo: boolean) => {
+      setIsLoading(setTo);
+    },
   };
 
   const [presenter] = useState(new UserInfoPresenter(listener));
@@ -30,9 +33,7 @@ const UserInfo = () => {
   }
 
   useEffect(() => {
-    presenter.setIsFollowerStatus(authToken!, currentUser!, displayedUser!);
-    presenter.setNumbFollowees(authToken!, displayedUser!);
-    presenter.setNumbFollowers(authToken!, displayedUser!);
+    presenter.loadFollowInfo(authToken!, currentUser!, displayedUser!);
   }, [displayedUser]);
 
   const switchToLoggedInUser = (event: React.MouseEvent): void => {
@@ -94,12 +95,14 @@ const UserInfo = () => {
               </h2>
               <h3>{displayedUser.alias}</h3>
               <br />
-              {presenter.followeeCount > -1 && presenter.followerCount > -1 && (
-                <div>
-                  Followees: {presenter.followeeCount} Followers:{" "}
-                  {presenter.followerCount}
-                </div>
-              )}
+              {presenter.followeeCount > -1 &&
+                presenter.followerCount > -1 &&
+                !isLoading && (
+                  <div>
+                    Followees: {presenter.followeeCount} Followers:{" "}
+                    {presenter.followerCount}
+                  </div>
+                )}
             </div>
             <form>
               {displayedUser !== currentUser && (
